@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import com.example.flowra.MainViewModel
 import com.example.flowra.ui.home.HomeScreen
 import com.example.flowra.ui.insignts.InsightsScreen
+import com.example.flowra.ui.recents.RecentsScreen
 import com.example.flowra.ui.recurring.RecurringScreen
 import com.example.flowra.ui.settings.SettingScreen
 import com.example.flowra.ui.splash.SplashScreen
@@ -32,7 +33,14 @@ fun FlowraNavHost(navController: NavHostController) {
             HomeScreen(navController, viewModel)
         }
         composable(Screen.Insights.route)  { InsightsScreen(navController) }
-        composable(Screen.Recurring.route) { RecurringScreen(navController) }
+        composable(Screen.Recurring.route) {
+            val viewModel: MainViewModel = koinViewModel()
+            RecurringScreen(navController, viewModel)
+        }
         composable(Screen.Setting.route)   { SettingScreen(navController) }
+        composable(Screen.Recents.route) {
+            val viewModel: MainViewModel = koinViewModel()
+            RecentsScreen(navController, viewModel)
+        }
     }
 }

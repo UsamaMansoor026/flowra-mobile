@@ -60,17 +60,21 @@ import com.example.flowra.MainViewModel
 import com.example.flowra.R
 import com.example.flowra.domain.model.Expense
 import com.example.flowra.ui.components.BudgetCircularProgress
+import com.example.flowra.ui.components.ExpenseCard
+import com.example.flowra.ui.navigation.Screen
 import com.example.flowra.ui.theme.CyanGlow
 import com.example.flowra.ui.theme.FlowraTheme
 import com.example.flowra.ui.theme.PrimaryBackground
 import com.example.flowra.ui.theme.PrimaryText
 import com.example.flowra.ui.theme.SecondaryText
+import com.example.flowra.ui.theme.boxShadow
 import com.example.flowra.ui.theme.flowraGlass
+import com.example.flowra.ui.utils.addPressEffect
 import com.example.flowra.ui.utils.formatExpenseDate
 
 @Composable
 fun HomeScreen(navController: NavHostController, viewModel: MainViewModel) {
-    val expenses = viewModel.expenses.value
+    val expenses = viewModel.expenses.value.slice(0..4)
     HomeScreenContent(
         navController = navController,
         expenses = expenses
@@ -129,10 +133,15 @@ fun HomeScreenContent(
                     fontWeight = FontWeight.SemiBold,
                 )
                 Text(
+                    modifier = Modifier.addPressEffect(
+                        onClick = {
+                            navController.navigate(Screen.Recents.route)
+                        }
+                    ),
                     text = "View All",
                     color = SecondaryText,
                     fontSize = 12.sp,
-                    fontWeight = FontWeight.Normal,
+                    fontWeight = FontWeight.Normal
                 )
             }
 
@@ -148,7 +157,7 @@ fun HomeScreenContent(
                     state = listState
                 ) {
                     items(expenses) { expense ->
-                        ExpenseItem(expense)
+                        ExpenseCard(expense)
                     }
                 }
 
@@ -211,9 +220,16 @@ private fun BalanceAndBudgetCard() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
+            .boxShadow(
+                color = CyanGlow.copy(alpha = 0.4f),
+                borderRadius = 32.dp,
+                blurRadius = 8.dp,
+                spreadRadius = 2.dp,
+                offsetX = 0.dp,
+                offsetY = 0.dp
+            )
             .clip(RoundedCornerShape(32.dp))
             .flowraGlass()
-            .border(1.dp, CyanGlow.copy(alpha = 0.3f), RoundedCornerShape(32.dp))
             .padding(32.dp)
     ) {
         Column {
@@ -287,53 +303,6 @@ private fun BalanceAndBudgetCard() {
 }
 
 @Composable
-private fun ExpenseItem(expense: Expense) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .flowraGlass()
-            .clip(RoundedCornerShape(8.dp))
-            .border(1.dp, CyanGlow.copy(alpha = 0.3f), RoundedCornerShape(8.dp))
-            .padding(24.dp, 16.dp),
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Column {
-                Text(
-                    text = expense.title,
-                    color = SecondaryText,
-                    fontWeight = FontWeight.Medium,
-                    fontSize = 16.sp,
-                    letterSpacing = 1.2.sp
-                )
-                Text(
-                    text = expense.category.uppercase(),
-                    color = SecondaryText,
-                    fontSize = 12.sp
-                )
-                Text(
-                    text = formatExpenseDate(expense.addedDate),
-                    fontSize = 10.sp,
-                    color = SecondaryText.copy(alpha = 0.6f),
-                    fontWeight = FontWeight.Normal
-                )
-            }
-
-            Text(
-                text = "-Rs ${expense.amount}",
-                color = CyanGlow.copy(alpha = 0.6f),
-                fontSize = 28.sp,
-                fontWeight = FontWeight.Bold
-            )
-        }
-    }
-    Spacer(modifier = Modifier.height(12.dp))
-}
-
-@Composable
 private fun AddExpense(
     onTrackClick: (String) -> Unit,
     onClearFocus: () -> Unit,
@@ -371,10 +340,6 @@ private fun AddExpense(
                 ),
                 keyboardActions = KeyboardActions(
                     onDone = {
-                        if (textState.isNotBlank()) {
-                            onTrackClick(textState)
-                            textState = ""
-                        }
                         onClearFocus()
                     }
                 ),
