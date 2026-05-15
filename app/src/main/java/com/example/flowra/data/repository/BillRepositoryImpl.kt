@@ -8,75 +8,92 @@ import com.example.flowra.domain.repository.BillRepository
 class BillRepositoryImpl : BillRepository {
     private val bills = mutableListOf(
         Bill(
-            1,
-            "Netflix",
-            Category.ENTERTAINMENT,
-            1200,
-            3,
-            BillingCycle.MONTHLY,
+            id = 1,
+            title = "Netflix",
+            category = Category.ENTERTAINMENT,
+            amount = 1200,
+            dueDate = 3,
+            billingCycle = BillingCycle.MONTHLY,
             isActive = true,
-            true
+            reminderEnabled = true,
+            isPaid = false
         ),
         Bill(
-            2,
-            "House Rent",
-            Category.BILLS,
-            25000,
-            5,
-            BillingCycle.MONTHLY,
+            id = 2,
+            title = "House Rent",
+            category = Category.BILLS,
+            amount = 25000,
+            dueDate = 5,
+            billingCycle = BillingCycle.MONTHLY,
             isActive = true,
-            true
+            reminderEnabled = true,
+            isPaid = false
         ),
         Bill(
-            3,
-            "Electricity",
-            Category.BILLS,
-            3500,
-            1,
-            BillingCycle.MONTHLY,
+            id = 3,
+            title = "Electricity",
+            category = Category.BILLS,
+            amount = 3500,
+            dueDate = 1,
+            billingCycle = BillingCycle.MONTHLY,
             isActive = true,
-            true
+            reminderEnabled = true,
+            isPaid = false
         ),
         Bill(
-            4,
-            "Spotify",
-            Category.ENTERTAINMENT,
-            350,
-            18,
-            BillingCycle.MONTHLY,
+            id = 4,
+            title = "Spotify",
+            category = Category.ENTERTAINMENT,
+            amount = 350,
+            dueDate = 18,
+            billingCycle = BillingCycle.MONTHLY,
             isActive = true,
-            false
-        ),
-        Bill(5, "Internet", Category.BILLS, 2500, 20, BillingCycle.MONTHLY, isActive = true, true),
-        Bill(
-            6,
-            "Gym Membership",
-            Category.HEALTH,
-            2000,
-            22,
-            BillingCycle.MONTHLY,
-            isActive = true,
-            true
+            reminderEnabled = false,
+            isPaid = true
         ),
         Bill(
-            7,
-            "Car Insurance",
-            Category.TRANSPORT,
-            15000,
-            10,
-            BillingCycle.YEARLY,
+            id = 5,
+            title = "Internet",
+            category = Category.BILLS,
+            amount = 2500,
+            dueDate = 20,
+            billingCycle = BillingCycle.MONTHLY,
             isActive = true,
-            true
+            reminderEnabled = true,
+            isPaid = true
         ),
         Bill(
-            8,
-            "YouTube Premium",
-            Category.ENTERTAINMENT,
-            189,
-            25,
-            BillingCycle.MONTHLY,
+            id = 6,
+            title = "Gym Membership",
+            category = Category.HEALTH,
+            amount = 2000,
+            dueDate = 22,
+            billingCycle = BillingCycle.MONTHLY,
+            isActive = true,
+            reminderEnabled = true,
+            isPaid = true
+        ),
+        Bill(
+            id = 7,
+            title = "Car Insurance",
+            category = Category.TRANSPORT,
+            amount = 15000,
+            dueDate = 10,
+            billingCycle = BillingCycle.YEARLY,
+            isActive = true,
+            reminderEnabled = true,
+            isPaid = false
+        ),
+        Bill(
+            id = 8,
+            title = "YouTube Premium",
+            category = Category.ENTERTAINMENT,
+            amount = 189,
+            dueDate = 25,
+            billingCycle = BillingCycle.MONTHLY,
             isActive = false,
-            false
+            reminderEnabled = false,
+            isPaid = false
         ),
     )
 
